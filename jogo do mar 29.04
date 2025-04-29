@@ -1,0 +1,55 @@
+let jogadores = ["🦐","🦈","🦀","🐡" ];
+let posicoesX = [0, 0, 0, 0];
+let teclas = ["a", "s", "d", "f"];
+let cores = ["green", "blue", "orange", "purple"];
+let vencedor = null;
+
+function setup() {
+  createCanvas(600, 400);
+  textSize(40);
+}
+
+function draw() {
+  background(220);
+  
+  // Linha de chegada
+  stroke("red");
+  strokeWeight(4);
+  line(width - 50, 0, width - 50, height);
+  noStroke();
+
+  exibeNumeroDeJogadores();
+  desenhaJogadores();
+  
+  if (vencedor !== null) {
+    fill("black");
+    textSize(30);
+    text("🏁 Vencedor: " + jogadores[vencedor], width/2 - 100, height - 30);
+    noLoop(); // para o jogo
+  }
+}
+
+function keyReleased() {
+  for (let i = 0; i < jogadores.length; i++) {
+    if (key.toLowerCase() === teclas[i]) {
+      posicoesX[i] += random(10, 30);
+      
+      if (posicoesX[i] >= width - 60) {
+        vencedor = i;
+      }
+    }
+  }
+}
+
+function exibeNumeroDeJogadores() {
+  fill("black");
+  textSize(20);
+  text("Número de jogadores: " + jogadores.length, 10, 30);
+}
+
+function desenhaJogadores() {
+  for (let i = 0; i < jogadores.length; i++) {
+    fill(cores[i]);
+    text(jogadores[i], posicoesX[i], 100 + i * 60);
+  }
+}
